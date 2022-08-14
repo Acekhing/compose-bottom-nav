@@ -1,43 +1,51 @@
 package com.penpab.bottomnav
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.penpab.bottomnav.ui.components.BottomNav
+import com.penpab.bottomnav.ui.components.NavGraph
 import com.penpab.bottomnav.ui.theme.BottomNavTheme
+import com.penpab.bottomnav.ui.utils.BottomNavUtils
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             BottomNavTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                val navController = rememberNavController()
+                Scaffold(
+                    backgroundColor = Color(0XFFE5E5E5),
+                    bottomBar = { BottomNav(navController) },
+                    modifier = Modifier
+                        .fillMaxSize()
                 ) {
-                    Greeting("Android")
+                    NavGraph(navController = navController)
                 }
             }
         }
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
 @Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    BottomNavTheme {
-        Greeting("Android")
+fun Preview() {
+    val navController = rememberNavController()
+    Scaffold(
+        backgroundColor = Color(0XFFE5E5E5),
+        bottomBar = { BottomNav(navController) },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        NavGraph(navController = navController)
     }
 }
